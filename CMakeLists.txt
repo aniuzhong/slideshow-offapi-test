@@ -12,6 +12,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+# Set up LibreOffice SDK paths
+set(SDK_INCLUDE_DIR  "${PROJECT_SOURCE_DIR}/instdir/sdk/include"  CACHE STRING  "OO_SDK_HOME/include")
+set(SDK_LIBRARY_DIR  "${PROJECT_SOURCE_DIR}/instdir/sdk/lib"      CACHE STRING  "OO_SDK_HOME/lib")
+set(SDK_BINARY_DIR   "${PROJECT_SOURCE_DIR}/instdir/sdk/bin"      CACHE STRING  "OO_SDK_HOME/bin")
+set(SDK_PROGRAM_DIR  "${PROJECT_SOURCE_DIR}/instdir/program"      CACHE STRING  "OO_SDK_URE_LIB_DIR")
+set(SDK_LIBRARIES    "isalhelper.lib" "isal.lib" "ipurpenvhelper.lib" "icppuhelper.lib" "icppu.lib")
+
 set(PROJECT_SOURCES
         main.cpp
         widget.cpp
@@ -38,11 +45,15 @@ else()
     else()
         add_executable(slideshow-offapi-test
             ${PROJECT_SOURCES}
-        )
+                    )
     endif()
 endif()
 
 target_link_libraries(slideshow-offapi-test PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_directories(slideshow-offapi-test PRIVATE ${SDK_LIBRARY_DIR})
+target_include_directories(slideshow-offapi-test PRIVATE ${SDK_INCLUDE_DIR})
+target_include_directories(slideshow-offapi-test PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_link_libraries(slideshow-offapi-test PRIVATE ${SDK_LIBRARIES})
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
