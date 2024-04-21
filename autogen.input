@@ -1,0 +1,6 @@
+--with-java=no
+--with-junit=no
+--with-doxygen=no
+--enable-odk
+--enable-avmedia
+--enable-optimized=yes
