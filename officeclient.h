@@ -1,6 +1,8 @@
 #ifndef OFFICECLIENT_H
 #define OFFICECLIENT_H
 
+#include <com/sun/star/lang/XMultiComponentFactory.hpp>
+
 class OfficeClient
 {
 public:
@@ -9,6 +11,28 @@ public:
     OfficeClient& operator=(const OfficeClient &) = delete;
     OfficeClient(OfficeClient&&) noexcept = default;
     OfficeClient & operator=(OfficeClient&&) noexcept = default;
+
+private:
+    template <typename T>
+    css::uno::Reference<T> qurey(rtl::OUString spec) noexcept
+    {
+        try
+        {
+            css::uno::Reference<T> inst(m_xMultiComponentFactory->createInstanceWithContext(spec, m_xComponentContext),
+                                        css::uno::UNO_QUERY);
+            return inst;
+        }
+        catch (css::uno::Exception& e)
+        {
+            printf("css::uno::Exception: Could not create service of type. %s.\n", e.Message.toUtf8().getStr());
+            return nullptr;
+        }
+        catch (...)
+        {
+            printf("Unknown exception: Could not create service of type.\n");
+            return nullptr;
+        }
+    }
 };
 
 #endif // OFFICECLIENT_H
