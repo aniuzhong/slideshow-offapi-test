@@ -45,7 +45,8 @@ else()
     else()
         add_executable(slideshow-offapi-test
             ${PROJECT_SOURCES}
-                    )
+            officeclient.h officeclient.cpp
+        )
     endif()
 endif()
 
