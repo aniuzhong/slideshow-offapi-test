@@ -3,6 +3,7 @@
 
 #include <com/sun/star/frame/XComponentLoader.hpp>
 #include <com/sun/star/lang/XMultiComponentFactory.hpp>
+#include <com/sun/star/presentation/XPresentationSupplier.hpp>
 
 class OfficeClient
 {
@@ -15,6 +16,7 @@ public:
 
 public:
     bool initialize() noexcept;
+    bool loadPresentation(const rtl::OUString&) noexcept;
 
 private:
     template <typename T>
@@ -42,6 +44,7 @@ private:
     css::uno::Reference<css::lang::XMultiComponentFactory>        m_xMultiComponentFactory;
     css::uno::Reference<css::uno::XComponentContext>              m_xComponentContext;
     css::uno::Reference<css::frame::XComponentLoader>             m_xComponentLoader;
+    css::uno::Reference<css::presentation::XPresentationSupplier> m_xPresentationSupplier;
 };
 
 #endif // OFFICECLIENT_H
