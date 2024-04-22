@@ -19,6 +19,7 @@ public:
     bool loadPresentation(const char*) noexcept;
     bool start() noexcept;
     bool setFullScreen(bool) noexcept;
+    bool getFullScreen(bool&) noexcept;
 
 private:
     template <typename T>

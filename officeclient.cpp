@@ -100,7 +100,7 @@ bool OfficeClient::start() noexcept
     return isStarted;
 }
 
-bool OfficeClient::setFullScreen(bool value) noexcept
+bool OfficeClient::setFullScreen(bool aValue) noexcept
 {
     if (!m_xPresentationSupplier.is())
         return false;
@@ -112,7 +112,7 @@ bool OfficeClient::setFullScreen(bool value) noexcept
         auto xPresentation = m_xPresentationSupplier->getPresentation();
 
         css::uno::Reference<css::beans::XPropertySet> xPropertySet(xPresentation, css::uno::UNO_QUERY);
-        xPropertySet->setPropertyValue("IsFullScreen", css::uno::Any(value));
+        xPropertySet->setPropertyValue("IsFullScreen", css::uno::Any(aValue));
 
         isSet = true;
     }
@@ -128,4 +128,35 @@ bool OfficeClient::setFullScreen(bool value) noexcept
     }
 
     return isSet;
+}
+
+bool OfficeClient::getFullScreen(bool& aValue) noexcept
+{
+    if (!m_xPresentationSupplier.is())
+        return false;
+
+    bool isGot = false;
+
+    try
+    {
+        auto xPresentation = m_xPresentationSupplier->getPresentation();
+
+        css::uno::Reference<css::beans::XPropertySet> xPropertySet(xPresentation, css::uno::UNO_QUERY);
+        auto isFullScreen = xPropertySet->getPropertyValue("IsFullScreen");
+        isFullScreen >>= aValue;
+
+        isGot = true;
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        isGot =  false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        isGot =  false;
+    }
+
+    return isGot;
 }
