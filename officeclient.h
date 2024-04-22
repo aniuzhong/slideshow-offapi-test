@@ -17,6 +17,7 @@ public:
 public:
     bool initialize() noexcept;
     bool loadPresentation(const rtl::OUString&) noexcept;
+    bool start() noexcept;
 
 private:
     template <typename T>

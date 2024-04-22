@@ -72,3 +72,31 @@ bool OfficeClient::loadPresentation(const rtl::OUString& aPath) noexcept
 
     return isLoaded;
 }
+
+bool OfficeClient::start() noexcept
+{
+    if (!m_xPresentationSupplier.is())
+        return false;
+
+    bool isStarted = false;
+
+    try
+    {
+        auto xPresentation = m_xPresentationSupplier->getPresentation();
+        css::uno::Reference<css::presentation::XPresentation2> xPresentation2(xPresentation, css::uno::UNO_QUERY);
+        xPresentation2->start();
+        isStarted = true;
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        isStarted =  false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        isStarted =  false;
+    }
+
+    return isStarted;
+}
