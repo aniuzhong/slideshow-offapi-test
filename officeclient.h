@@ -18,6 +18,7 @@ public:
     bool initialize() noexcept;
     bool loadPresentation(const rtl::OUString&) noexcept;
     bool start() noexcept;
+    bool setFullScreen(bool) noexcept;
 
 private:
     template <typename T>
