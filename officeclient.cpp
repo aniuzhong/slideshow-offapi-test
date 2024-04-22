@@ -50,9 +50,11 @@ bool OfficeClient::loadPresentation(const char* szURL) noexcept
         css::uno::Sequence<css::beans::PropertyValue> loadProperties(0);
         auto xComponent = m_xComponentLoader->loadComponentFromURL(aURL, "_blank", 0, loadProperties);
 
+        if (!xComponent.is())
+            return isLoaded;
+
         m_xPresentationSupplier = css::uno::Reference<css::presentation::XPresentationSupplier>(xComponent, css::uno::UNO_QUERY);
         auto xPresentation = m_xPresentationSupplier->getPresentation();
-
 
         isLoaded = true;
     }
