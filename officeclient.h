@@ -1,6 +1,7 @@
 #ifndef OFFICECLIENT_H
 #define OFFICECLIENT_H
 
+#include <com/sun/star/frame/XComponentLoader.hpp>
 #include <com/sun/star/lang/XMultiComponentFactory.hpp>
 
 class OfficeClient
@@ -11,6 +12,9 @@ public:
     OfficeClient& operator=(const OfficeClient &) = delete;
     OfficeClient(OfficeClient&&) noexcept = default;
     OfficeClient & operator=(OfficeClient&&) noexcept = default;
+
+public:
+    bool initialize() noexcept;
 
 private:
     template <typename T>
@@ -33,6 +37,11 @@ private:
             return nullptr;
         }
     }
+
+private:
+    css::uno::Reference<css::lang::XMultiComponentFactory>        m_xMultiComponentFactory;
+    css::uno::Reference<css::uno::XComponentContext>              m_xComponentContext;
+    css::uno::Reference<css::frame::XComponentLoader>             m_xComponentLoader;
 };
 
 #endif // OFFICECLIENT_H
