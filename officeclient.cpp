@@ -1,4 +1,3 @@
-#include <osl/file.hxx>
 #include <cppuhelper/bootstrap.hxx>
 #include <com/sun/star/frame/XDesktop.hpp>
 #include <com/sun/star/presentation/XPresentation2.hpp>
@@ -41,15 +40,13 @@ bool OfficeClient::initialize() noexcept
     return isInitialized;
 }
 
-bool OfficeClient::loadPresentation(const rtl::OUString& aPath) noexcept
+bool OfficeClient::loadPresentation(const char* szURL) noexcept
 {
     bool isLoaded = false;
 
     try
     {
-        rtl::OUString aURL;
-        osl::FileBase::getFileURLFromSystemPath(aPath, aURL);
-
+        auto aURL = rtl::OUString::createFromAscii(szURL);
         css::uno::Sequence<css::beans::PropertyValue> loadProperties(0);
         auto xComponent = m_xComponentLoader->loadComponentFromURL(aURL, "_blank", 0, loadProperties);
 

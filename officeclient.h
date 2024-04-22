@@ -16,7 +16,7 @@ public:
 
 public:
     bool initialize() noexcept;
-    bool loadPresentation(const rtl::OUString&) noexcept;
+    bool loadPresentation(const char*) noexcept;
     bool start() noexcept;
     bool setFullScreen(bool) noexcept;
 
