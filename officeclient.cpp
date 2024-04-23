@@ -12,10 +12,8 @@ OfficeClient::OfficeClient() noexcept
 {
 }
 
-bool OfficeClient::initialize() noexcept
+bool OfficeClient::connect() noexcept
 {
-    bool isInitialized = false;
-
     try
     {
         m_xRemoteContext = cppu::bootstrap();
@@ -24,20 +22,18 @@ bool OfficeClient::initialize() noexcept
         auto xDesktop = qurey<css::frame::XDesktop>("com.sun.star.frame.Desktop");
         m_xComponentLoader = css::uno::Reference<css::frame::XComponentLoader>(xDesktop, css::uno::UNO_QUERY);
 
-        isInitialized =  true;
+        return true;
     }
     catch (css::uno::Exception& e)
     {
         printf("css::uno::Exception: %s.\n", e.Message.toUtf8().getStr());
-        isInitialized = false;
+        return false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isInitialized = false;
+        return false;
     }
-
-    return isInitialized;
 }
 
 bool OfficeClient::loadPresentation(const char* szURL) noexcept
@@ -89,12 +85,12 @@ bool OfficeClient::start() noexcept
     catch (css::uno::Exception& e)
     {
         printf("%s.\n", e.Message.toUtf8().getStr());
-        isStarted =  false;
+        isStarted = false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isStarted =  false;
+        isStarted = false;
     }
 
     return isStarted;
@@ -150,7 +146,7 @@ bool OfficeClient::getFullScreen(bool& aValue) noexcept
     catch (css::uno::Exception& e)
     {
         printf("%s.\n", e.Message.toUtf8().getStr());
-        isGot =  false;
+        isGot = false;
     }
     catch (...)
     {

@@ -15,7 +15,7 @@ public:
     OfficeClient & operator=(OfficeClient&&) noexcept = default;
 
 public:
-    bool initialize() noexcept;
+    bool connect() noexcept;
     bool loadPresentation(const char*) noexcept;
     bool start() noexcept;
     bool setFullScreen(bool) noexcept;
