@@ -8,7 +8,7 @@ class OfficeProber
 public:
     OfficeProber();
 
-    int64_t getSOfficePID();
+    int64_t getSOfficeBinPID();
 };
 
 #endif // OFFICEPROBER_H

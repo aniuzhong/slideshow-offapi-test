@@ -9,7 +9,7 @@ OfficeProber::OfficeProber()
 {
 }
 
-int64_t OfficeProber::getSOfficePID()
+int64_t OfficeProber::getSOfficeBinPID()
 {
     std::map<std::string, int64_t> mapNamePID;
 
@@ -39,3 +39,4 @@ int64_t OfficeProber::getSOfficePID()
 
     return 0;
 }
+
