@@ -40,3 +40,23 @@ int64_t OfficeProber::getSOfficeBinPID()
     return 0;
 }
 
+void OfficeProber::killSOfficeBin()
+{
+    int64_t ullPID = getSOfficeBinPID();
+    if (ullPID == 0)
+        return;
+
+    HANDLE hProcess = NULL;
+    hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, ullPID);
+    if (hProcess == NULL)
+    {
+        printf("Failed Open Process: %lu\n", GetLastError());
+        return;
+    }
+    if(TerminateProcess(hProcess,0) == 0)
+    {
+        printf("Failed to TerminateProcess: %lu", GetLastError());
+        return;
+    }
+}
+

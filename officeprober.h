@@ -9,6 +9,7 @@ public:
     OfficeProber();
 
     int64_t getSOfficeBinPID();
+    void    killSOfficeBin();
 };
 
 #endif // OFFICEPROBER_H
