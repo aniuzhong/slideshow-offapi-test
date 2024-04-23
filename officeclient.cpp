@@ -6,7 +6,7 @@
 
 OfficeClient::OfficeClient() noexcept
     : m_xMultiComponentFactory { nullptr }
-    , m_xComponentContext { nullptr }
+    , m_xRemoteContext { nullptr }
     , m_xComponentLoader { nullptr }
     , m_xPresentationSupplier { nullptr }
 {
@@ -18,8 +18,8 @@ bool OfficeClient::initialize() noexcept
 
     try
     {
-        m_xComponentContext = cppu::bootstrap();
-        m_xMultiComponentFactory = m_xComponentContext->getServiceManager();
+        m_xRemoteContext = cppu::bootstrap();
+        m_xMultiComponentFactory = m_xRemoteContext->getServiceManager();
 
         auto xDesktop = qurey<css::frame::XDesktop>("com.sun.star.frame.Desktop");
         m_xComponentLoader = css::uno::Reference<css::frame::XComponentLoader>(xDesktop, css::uno::UNO_QUERY);
@@ -29,12 +29,12 @@ bool OfficeClient::initialize() noexcept
     catch (css::uno::Exception& e)
     {
         printf("css::uno::Exception: %s.\n", e.Message.toUtf8().getStr());
-        isInitialized =  false;
+        isInitialized = false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isInitialized =  false;
+        isInitialized = false;
     }
 
     return isInitialized;
@@ -61,12 +61,12 @@ bool OfficeClient::loadPresentation(const char* szURL) noexcept
     catch (css::uno::Exception& e)
     {
         printf("%s.\n", e.Message.toUtf8().getStr());
-        isLoaded =  false;
+        isLoaded = false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isLoaded =  false;
+        isLoaded = false;
     }
 
     return isLoaded;
@@ -119,12 +119,12 @@ bool OfficeClient::setFullScreen(bool aValue) noexcept
     catch (css::uno::Exception& e)
     {
         printf("%s.\n", e.Message.toUtf8().getStr());
-        isSet =  false;
+        isSet = false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isSet =  false;
+        isSet = false;
     }
 
     return isSet;
@@ -155,7 +155,7 @@ bool OfficeClient::getFullScreen(bool& aValue) noexcept
     catch (...)
     {
         printf("Unknown exception.\n");
-        isGot =  false;
+        isGot = false;
     }
 
     return isGot;
