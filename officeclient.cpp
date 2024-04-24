@@ -1,13 +1,15 @@
 #include <cppuhelper/bootstrap.hxx>
 #include <com/sun/star/frame/XDesktop.hpp>
-#include <com/sun/star/presentation/XPresentation2.hpp>
+#include <com/sun/star/util/XCloseable.hpp>
+#include <com/sun/star/frame/XComponentLoader.hpp>
+#include <com/sun/star/presentation/XPresentationSupplier.hpp>
 
 #include "officeclient.h"
 
 OfficeClient::OfficeClient() noexcept
     : m_xRemoteContext { nullptr }
     , m_xMultiComponentFactory { nullptr }
-    , m_xPresentationSupplier { nullptr }
+    , m_xComponent { nullptr }
 {
 }
 
@@ -67,8 +69,6 @@ bool OfficeClient::isAlive() noexcept
 
 bool OfficeClient::loadPresentation(const char* szURL) noexcept
 {
-    bool isLoaded = false;
-
     try
     {
         auto aURL = rtl::OUString::createFromAscii(szURL);
@@ -77,115 +77,137 @@ bool OfficeClient::loadPresentation(const char* szURL) noexcept
         auto xDesktop = qurey<css::frame::XDesktop>("com.sun.star.frame.Desktop");
         css::uno::Reference<css::frame::XComponentLoader> xComponentLoader(xDesktop, css::uno::UNO_QUERY);
 
-        auto xComponent = xComponentLoader->loadComponentFromURL(aURL, "_blank", 0, loadProperties);
+        m_xComponent = xComponentLoader->loadComponentFromURL(aURL, "_blank", 0, loadProperties);
 
-        if (!xComponent.is())
-            return isLoaded;
+        if (!m_xComponent.is())
+            return false;
 
-        m_xPresentationSupplier = css::uno::Reference<css::presentation::XPresentationSupplier>(xComponent, css::uno::UNO_QUERY);
-        auto xPresentation = m_xPresentationSupplier->getPresentation();
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
 
-        isLoaded = true;
+        m_sCurrentURL = szURL;
+
+        return true;
     }
     catch (css::uno::Exception& e)
     {
         printf("%s.\n", e.Message.toUtf8().getStr());
-        isLoaded = false;
+        return false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isLoaded = false;
+        return false;
     }
-
-    return isLoaded;
 }
 
 bool OfficeClient::start() noexcept
 {
-    if (!m_xPresentationSupplier.is())
-        return false;
-
-    bool isStarted = false;
-
     try
     {
-        auto xPresentation = m_xPresentationSupplier->getPresentation();
+        if (!m_xComponent.is())
+            return false;
+
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
+
         css::uno::Reference<css::presentation::XPresentation2> xPresentation2(xPresentation, css::uno::UNO_QUERY);
         xPresentation2->start();
-        isStarted = true;
+
+        return true;
     }
     catch (css::uno::Exception& e)
     {
         printf("%s.\n", e.Message.toUtf8().getStr());
-        isStarted = false;
+        return false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isStarted = false;
+        return false;
     }
-
-    return isStarted;
 }
 
 bool OfficeClient::setFullScreen(bool aValue) noexcept
 {
-    if (!m_xPresentationSupplier.is())
-        return false;
-
-    bool isSet = false;
-
     try
     {
-        auto xPresentation = m_xPresentationSupplier->getPresentation();
+        if (!m_xComponent.is())
+            return false;
+
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
 
         css::uno::Reference<css::beans::XPropertySet> xPropertySet(xPresentation, css::uno::UNO_QUERY);
         xPropertySet->setPropertyValue("IsFullScreen", css::uno::Any(aValue));
 
-        isSet = true;
+        return true;
     }
     catch (css::uno::Exception& e)
     {
         printf("%s.\n", e.Message.toUtf8().getStr());
-        isSet = false;
+        return false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isSet = false;
+        return false;
     }
-
-    return isSet;
 }
 
 bool OfficeClient::getFullScreen(bool& aValue) noexcept
 {
-    if (!m_xPresentationSupplier.is())
-        return false;
-
-    bool isGot = false;
-
     try
     {
-        auto xPresentation = m_xPresentationSupplier->getPresentation();
+        if (!m_xComponent.is())
+            return false;
+
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
 
         css::uno::Reference<css::beans::XPropertySet> xPropertySet(xPresentation, css::uno::UNO_QUERY);
         auto isFullScreen = xPropertySet->getPropertyValue("IsFullScreen");
         isFullScreen >>= aValue;
 
-        isGot = true;
+        return true;
     }
     catch (css::uno::Exception& e)
     {
         printf("%s.\n", e.Message.toUtf8().getStr());
-        isGot = false;
+        return false;
     }
     catch (...)
     {
         printf("Unknown exception.\n");
-        isGot = false;
+        return false;
     }
+}
 
-    return isGot;
+css::uno::Reference<com::sun::star::presentation::XPresentation> OfficeClient::getXPresentation()
+{
+    try
+    {
+        if (!m_xComponent.is())
+            return nullptr;
+        css::uno::Reference<css::presentation::XPresentationSupplier> xPresentationSupplier(m_xComponent,
+                                                                                            css::uno::UNO_QUERY);
+        auto xPresentation = xPresentationSupplier->getPresentation();
+        if (!xPresentation.is())
+            return nullptr;
+        return xPresentation;
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        return nullptr;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        return nullptr;
+    }
 }

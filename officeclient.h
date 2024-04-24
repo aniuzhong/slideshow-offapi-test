@@ -1,9 +1,9 @@
 #ifndef OFFICECLIENT_H
 #define OFFICECLIENT_H
 
-#include <com/sun/star/frame/XComponentLoader.hpp>
+#include <com/sun/star/lang/XComponent.hpp>
 #include <com/sun/star/lang/XMultiComponentFactory.hpp>
-#include <com/sun/star/presentation/XPresentationSupplier.hpp>
+#include <com/sun/star/presentation/XPresentation2.hpp>
 
 class OfficeClient
 {
@@ -44,10 +44,12 @@ private:
         }
     }
 
-public:
+    css::uno::Reference<css::presentation::XPresentation> getXPresentation();
+
+private:
     css::uno::Reference<css::uno::XComponentContext>              m_xRemoteContext;
     css::uno::Reference<css::lang::XMultiComponentFactory>        m_xMultiComponentFactory;
-    css::uno::Reference<css::presentation::XPresentationSupplier> m_xPresentationSupplier;
+    css::uno::Reference<css::lang::XComponent>                    m_xComponent;
 };
 
 #endif // OFFICECLIENT_H
