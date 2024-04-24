@@ -15,12 +15,13 @@ public:
     OfficeClient & operator=(OfficeClient&&) noexcept = default;
 
 public:
-    bool connect() noexcept;
-    bool isAlive() noexcept;
-    bool loadPresentation(const char*) noexcept;
-    bool start() noexcept;
-    bool setFullScreen(bool) noexcept;
-    bool getFullScreen(bool&) noexcept;
+    bool            connect() noexcept;
+    bool            isAlive() noexcept;
+    bool            loadPresentation(const char*) noexcept;
+    std::string     getCurrentURL() const noexcept;
+    bool            start() noexcept;
+    bool            setFullScreen(bool) noexcept;
+    bool            getFullScreen(bool&) noexcept;
 
 private:
     template <typename T>
@@ -50,6 +51,7 @@ private:
     css::uno::Reference<css::uno::XComponentContext>              m_xRemoteContext;
     css::uno::Reference<css::lang::XMultiComponentFactory>        m_xMultiComponentFactory;
     css::uno::Reference<css::lang::XComponent>                    m_xComponent;
+    std::string                                                   m_sCurrentURL;
 };
 
 #endif // OFFICECLIENT_H

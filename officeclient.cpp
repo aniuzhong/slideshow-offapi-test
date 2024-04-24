@@ -10,6 +10,7 @@ OfficeClient::OfficeClient() noexcept
     : m_xRemoteContext { nullptr }
     , m_xMultiComponentFactory { nullptr }
     , m_xComponent { nullptr }
+    , m_sCurrentURL { }
 {
 }
 
@@ -100,6 +101,11 @@ bool OfficeClient::loadPresentation(const char* szURL) noexcept
         printf("Unknown exception.\n");
         return false;
     }
+}
+
+std::string OfficeClient::getCurrentURL() const noexcept
+{
+    return m_sCurrentURL;
 }
 
 bool OfficeClient::start() noexcept
@@ -195,6 +201,10 @@ css::uno::Reference<com::sun::star::presentation::XPresentation> OfficeClient::g
             return nullptr;
         css::uno::Reference<css::presentation::XPresentationSupplier> xPresentationSupplier(m_xComponent,
                                                                                             css::uno::UNO_QUERY);
+        // Maybe not a presentation document
+        if (!xPresentationSupplier.is())
+            return nullptr;
+
         auto xPresentation = xPresentationSupplier->getPresentation();
         if (!xPresentation.is())
             return nullptr;
