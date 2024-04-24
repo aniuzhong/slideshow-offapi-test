@@ -44,9 +44,8 @@ private:
     }
 
 public:
-    css::uno::Reference<css::lang::XMultiComponentFactory>        m_xMultiComponentFactory;
     css::uno::Reference<css::uno::XComponentContext>              m_xRemoteContext;
-    css::uno::Reference<css::frame::XComponentLoader>             m_xComponentLoader;
+    css::uno::Reference<css::lang::XMultiComponentFactory>        m_xMultiComponentFactory;
     css::uno::Reference<css::presentation::XPresentationSupplier> m_xPresentationSupplier;
 };
 

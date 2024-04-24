@@ -5,9 +5,8 @@
 #include "officeclient.h"
 
 OfficeClient::OfficeClient() noexcept
-    : m_xMultiComponentFactory { nullptr }
-    , m_xRemoteContext { nullptr }
-    , m_xComponentLoader { nullptr }
+    : m_xRemoteContext { nullptr }
+    , m_xMultiComponentFactory { nullptr }
     , m_xPresentationSupplier { nullptr }
 {
 }
@@ -18,9 +17,6 @@ bool OfficeClient::connect() noexcept
     {
         m_xRemoteContext = cppu::bootstrap();
         m_xMultiComponentFactory = m_xRemoteContext->getServiceManager();
-
-        auto xDesktop = qurey<css::frame::XDesktop>("com.sun.star.frame.Desktop");
-        m_xComponentLoader = css::uno::Reference<css::frame::XComponentLoader>(xDesktop, css::uno::UNO_QUERY);
 
         return true;
     }
@@ -44,7 +40,11 @@ bool OfficeClient::loadPresentation(const char* szURL) noexcept
     {
         auto aURL = rtl::OUString::createFromAscii(szURL);
         css::uno::Sequence<css::beans::PropertyValue> loadProperties(0);
-        auto xComponent = m_xComponentLoader->loadComponentFromURL(aURL, "_blank", 0, loadProperties);
+
+        auto xDesktop = qurey<css::frame::XDesktop>("com.sun.star.frame.Desktop");
+        css::uno::Reference<css::frame::XComponentLoader> xComponentLoader(xDesktop, css::uno::UNO_QUERY);
+
+        auto xComponent = xComponentLoader->loadComponentFromURL(aURL, "_blank", 0, loadProperties);
 
         if (!xComponent.is())
             return isLoaded;
