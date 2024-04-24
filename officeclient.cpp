@@ -32,6 +32,39 @@ bool OfficeClient::connect() noexcept
     }
 }
 
+bool OfficeClient::isAlive() noexcept
+{
+    try
+    {
+        if (m_xRemoteContext.is())
+        {
+            auto xMultiComponentFactory = m_xRemoteContext->getServiceManager();
+            if (xMultiComponentFactory.is())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        return false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        return false;
+    }
+}
+
 bool OfficeClient::loadPresentation(const char* szURL) noexcept
 {
     bool isLoaded = false;
