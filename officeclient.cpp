@@ -103,6 +103,27 @@ bool OfficeClient::loadPresentation(const char* szURL) noexcept
     }
 }
 
+void OfficeClient::closePresentation() noexcept
+{
+    try
+    {
+        if (m_xComponent.is())
+        {
+            css::uno::Reference<css::util::XCloseable> xCloseable(m_xComponent, css::uno::UNO_QUERY_THROW);
+            xCloseable->close(false);
+        }
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+    }
+}
+
 std::string OfficeClient::getCurrentURL() const noexcept
 {
     return m_sCurrentURL;
@@ -201,9 +222,9 @@ css::uno::Reference<com::sun::star::presentation::XPresentation> OfficeClient::g
             return nullptr;
         css::uno::Reference<css::presentation::XPresentationSupplier> xPresentationSupplier(m_xComponent,
                                                                                             css::uno::UNO_QUERY);
-        // Maybe not a presentation document
-        if (!xPresentationSupplier.is())
-            return nullptr;
+        // // Maybe not a presentation document
+        // if (!xPresentationSupplier.is())
+        //     return nullptr;
 
         auto xPresentation = xPresentationSupplier->getPresentation();
         if (!xPresentation.is())
