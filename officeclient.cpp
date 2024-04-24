@@ -124,11 +124,6 @@ void OfficeClient::closePresentation() noexcept
     }
 }
 
-std::string OfficeClient::getCurrentURL() const noexcept
-{
-    return m_sCurrentURL;
-}
-
 bool OfficeClient::isPresentationAvailable() noexcept
 {
     try

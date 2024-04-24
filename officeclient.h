@@ -19,7 +19,6 @@ public:
     bool            isAlive() noexcept;
     bool            loadPresentation(const char*) noexcept;
     void            closePresentation() noexcept;
-    std::string     getCurrentURL() const noexcept;
     bool            isPresentationAvailable() noexcept;
     bool            start() noexcept;
     bool            setFullScreen(bool) noexcept;
