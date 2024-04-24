@@ -129,6 +129,25 @@ std::string OfficeClient::getCurrentURL() const noexcept
     return m_sCurrentURL;
 }
 
+bool OfficeClient::isPresentationAvailable() noexcept
+{
+    try
+    {
+        auto xPresentation = getXPresentation();
+        return xPresentation.is();
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        return false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        return false;
+    }
+}
+
 bool OfficeClient::start() noexcept
 {
     try
