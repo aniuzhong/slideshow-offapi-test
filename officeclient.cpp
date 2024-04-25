@@ -10,7 +10,6 @@ OfficeClient::OfficeClient() noexcept
     : m_xRemoteContext { nullptr }
     , m_xMultiComponentFactory { nullptr }
     , m_xComponent { nullptr }
-    , m_sCurrentURL { }
 {
 }
 
@@ -86,8 +85,6 @@ bool OfficeClient::loadPresentation(const char* szURL) noexcept
         auto xPresentation = getXPresentation();
         if (!xPresentation.is())
             return false;
-
-        m_sCurrentURL = szURL;
 
         return true;
     }

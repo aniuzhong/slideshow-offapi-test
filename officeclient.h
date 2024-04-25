@@ -52,7 +52,6 @@ private:
     css::uno::Reference<css::uno::XComponentContext>              m_xRemoteContext;
     css::uno::Reference<css::lang::XMultiComponentFactory>        m_xMultiComponentFactory;
     css::uno::Reference<css::lang::XComponent>                    m_xComponent;
-    std::string                                                   m_sCurrentURL;
 };
 
 #endif // OFFICECLIENT_H
