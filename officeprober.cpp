@@ -34,6 +34,11 @@ void OfficeProber::killSOfficeBin()
     }
 }
 
+int64_t OfficeProber::getSOfficeExePid()
+{
+    return getProcessPid("soffice.exe");
+}
+
 int64_t OfficeProber::getProcessPid(const std::string& sProcessName)
 {
     std::map<std::string, int64_t> mapNamePID;

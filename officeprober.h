@@ -10,6 +10,7 @@ public:
 
     int64_t getSOfficeBinPid();
     void    killSOfficeBin();
+    int64_t getSOfficeExePid();
 
 private:
     int64_t getProcessPid(const std::string&);
