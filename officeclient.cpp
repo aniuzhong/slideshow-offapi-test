@@ -1,6 +1,7 @@
 #include <cppuhelper/bootstrap.hxx>
 #include <com/sun/star/frame/XDesktop.hpp>
 #include <com/sun/star/util/XCloseable.hpp>
+#include <com/sun/star/frame/XStorable.hpp>
 #include <com/sun/star/frame/XComponentLoader.hpp>
 #include <com/sun/star/presentation/XPresentationSupplier.hpp>
 
@@ -212,6 +213,41 @@ bool OfficeClient::getFullScreen(bool& aValue) noexcept
         isFullScreen >>= aValue;
 
         return true;
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        return false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        return false;
+    }
+}
+
+bool OfficeClient::convertToPDF(const char* szURL) noexcept
+{
+    try
+    {
+        if (!m_xComponent.is())
+            return false;
+
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
+
+        auto aURL = rtl::OUString::createFromAscii(szURL);
+
+        css::uno::Reference<css::frame::XStorable> xStorable(m_xComponent, css::uno::UNO_QUERY_THROW);
+        css::uno::Sequence<css::beans::PropertyValue> storeProps(3);
+        storeProps[0].Name = "FilterName";
+        storeProps[0].Value <<= rtl::OUString("impress_pdf_Export");
+        storeProps[1].Name = "Overwrite";
+        storeProps[1].Value <<= true;
+        storeProps[2].Name = "SelectPdfVersion";
+        storeProps[2].Value <<= sal_Int32(1);
+        xStorable->storeToURL(aURL, storeProps);
     }
     catch (css::uno::Exception& e)
     {

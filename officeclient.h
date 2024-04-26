@@ -23,6 +23,7 @@ public:
     bool            start() noexcept;
     bool            setFullScreen(bool) noexcept;
     bool            getFullScreen(bool&) noexcept;
+    bool            convertToPDF(const char*) noexcept;
 
 private:
     template <typename T>
