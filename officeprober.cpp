@@ -9,7 +9,32 @@ OfficeProber::OfficeProber()
 {
 }
 
-int64_t OfficeProber::getSOfficeBinPID()
+int64_t OfficeProber::getSOfficeBinPid()
+{
+    return getProcessPid("soffice.bin");
+}
+
+void OfficeProber::killSOfficeBin()
+{
+    int64_t ullPID = getSOfficeBinPid();
+    if (ullPID == 0)
+        return;
+
+    HANDLE hProcess = NULL;
+    hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, ullPID);
+    if (hProcess == NULL)
+    {
+        printf("Failed Open Process: %lu\n", GetLastError());
+        return;
+    }
+    if(TerminateProcess(hProcess,0) == 0)
+    {
+        printf("Failed to TerminateProcess: %lu", GetLastError());
+        return;
+    }
+}
+
+int64_t OfficeProber::getProcessPid(const std::string& sProcessName)
 {
     std::map<std::string, int64_t> mapNamePID;
 
@@ -33,30 +58,10 @@ int64_t OfficeProber::getSOfficeBinPID()
         bResult = Process32Next(hProcessSnap, &aEntry);
     }
 
-    for (const auto& prNamePID : mapNamePID)
-        if (prNamePID.first == "soffice.bin")
-            return prNamePID.second;
+    for (const auto& pairNamePID : mapNamePID)
+        if (pairNamePID.first == sProcessName)
+            return pairNamePID.second;
 
     return 0;
-}
-
-void OfficeProber::killSOfficeBin()
-{
-    int64_t ullPID = getSOfficeBinPID();
-    if (ullPID == 0)
-        return;
-
-    HANDLE hProcess = NULL;
-    hProcess = OpenProcess(PROCESS_TERMINATE, FALSE, ullPID);
-    if (hProcess == NULL)
-    {
-        printf("Failed Open Process: %lu\n", GetLastError());
-        return;
-    }
-    if(TerminateProcess(hProcess,0) == 0)
-    {
-        printf("Failed to TerminateProcess: %lu", GetLastError());
-        return;
-    }
 }
 
