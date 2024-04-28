@@ -196,6 +196,34 @@ bool OfficeClient::start() noexcept
     }
 }
 
+bool OfficeClient::end() noexcept
+{
+    try
+    {
+        if (!m_xComponent.is())
+            return false;
+
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
+
+        css::uno::Reference<css::presentation::XPresentation2> xPresentation2(xPresentation, css::uno::UNO_QUERY);
+        xPresentation2->end();
+
+        return true;
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        return false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        return false;
+    }
+}
+
 bool OfficeClient::setFullScreen(bool aValue) noexcept
 {
     try

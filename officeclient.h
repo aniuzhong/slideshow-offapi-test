@@ -21,6 +21,7 @@ public:
     void            closePresentation() noexcept;
     bool            isPresentationAvailable() noexcept;
     bool            start() noexcept;
+    bool            end() noexcept;
     bool            isRunning() noexcept;
     bool            setFullScreen(bool) noexcept;
     bool            getFullScreen(bool&) noexcept;
