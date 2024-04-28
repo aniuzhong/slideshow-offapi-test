@@ -23,6 +23,7 @@ public:
     bool            start() noexcept;
     bool            end() noexcept;
     bool            isRunning() noexcept;
+    sal_Int32       getSlideCount() noexcept;
     bool            gotoNextEffect() noexcept;
     bool            gotoPreviousEffect() noexcept;
     bool            setFullScreen(bool) noexcept;
