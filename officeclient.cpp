@@ -204,6 +204,42 @@ bool OfficeClient::gotoNextEffect() noexcept
     }
 }
 
+bool OfficeClient::gotoPreviousEffect() noexcept
+{
+    try
+    {
+        if (!m_xComponent.is())
+            return false;
+
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
+
+        css::uno::Reference<css::presentation::XPresentation2> xPresentation2(xPresentation, css::uno::UNO_QUERY);
+
+        if (!xPresentation2->isRunning())
+            return false;
+
+        auto xSlideShowController = xPresentation2->getController();
+        if (!xSlideShowController.is())
+            return false;
+
+        xSlideShowController->gotoPreviousEffect();
+
+        return true;
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        return false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        return false;
+    }
+}
+
 bool OfficeClient::start() noexcept
 {
     try

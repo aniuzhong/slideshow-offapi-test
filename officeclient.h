@@ -24,6 +24,7 @@ public:
     bool            end() noexcept;
     bool            isRunning() noexcept;
     bool            gotoNextEffect() noexcept;
+    bool            gotoPreviousEffect() noexcept;
     bool            setFullScreen(bool) noexcept;
     bool            getFullScreen(bool&) noexcept;
     bool            convertToPDF(const char*) noexcept;
