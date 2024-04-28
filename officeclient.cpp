@@ -303,6 +303,8 @@ bool OfficeClient::convertToPDF(const char* szURL) noexcept
         storeProps[2].Name = "SelectPdfVersion";
         storeProps[2].Value <<= sal_Int32(1);
         xStorable->storeToURL(aURL, storeProps);
+
+        return true;
     }
     catch (css::uno::Exception& e)
     {
