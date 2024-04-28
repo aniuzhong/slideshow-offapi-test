@@ -141,6 +141,33 @@ bool OfficeClient::isPresentationAvailable() noexcept
     }
 }
 
+bool OfficeClient::isRunning() noexcept
+{
+    try
+    {
+        if (!m_xComponent.is())
+            return false;
+
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
+
+        css::uno::Reference<css::presentation::XPresentation2> xPresentation2(xPresentation, css::uno::UNO_QUERY);
+
+        return xPresentation2->isRunning();;
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        return false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        return false;
+    }
+}
+
 bool OfficeClient::start() noexcept
 {
     try
