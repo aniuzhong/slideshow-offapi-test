@@ -528,6 +528,34 @@ bool OfficeClient::getFullScreen(bool& aValue) noexcept
     }
 }
 
+bool OfficeClient::setEndless(bool aValue) noexcept
+{
+    try
+    {
+        if (!m_xComponent.is())
+            return false;
+
+        auto xPresentation = getXPresentation();
+        if (!xPresentation.is())
+            return false;
+
+        css::uno::Reference<css::beans::XPropertySet> xPropertySet(xPresentation, css::uno::UNO_QUERY);
+        xPropertySet->setPropertyValue("IsFullScreen", css::uno::Any(aValue));
+
+        return true;
+    }
+    catch (css::uno::Exception& e)
+    {
+        printf("%s.\n", e.Message.toUtf8().getStr());
+        return false;
+    }
+    catch (...)
+    {
+        printf("Unknown exception.\n");
+        return false;
+    }
+}
+
 bool OfficeClient::getEndless(bool& aValue) noexcept
 {
     try
