@@ -32,6 +32,7 @@ public:
     bool            gotoLastSlide() noexcept;
     bool            setFullScreen(bool) noexcept;
     bool            getFullScreen(bool&) noexcept;
+    bool            getEndless(bool&) noexcept;
     bool            convertToPDF(const char*) noexcept;
 
 private:
