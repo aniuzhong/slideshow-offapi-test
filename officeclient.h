@@ -28,6 +28,7 @@ public:
     bool            gotoPreviousEffect() noexcept;
     bool            gotoNextSlide() noexcept;
     bool            gotoPreviousSlide() noexcept;
+    bool            gotoFirstSlide() noexcept;
     bool            setFullScreen(bool) noexcept;
     bool            getFullScreen(bool&) noexcept;
     bool            convertToPDF(const char*) noexcept;
