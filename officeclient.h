@@ -26,6 +26,7 @@ public:
     sal_Int32       getSlideCount() noexcept;
     bool            gotoNextEffect() noexcept;
     bool            gotoPreviousEffect() noexcept;
+    bool            gotoNextSlide() noexcept;
     bool            setFullScreen(bool) noexcept;
     bool            getFullScreen(bool&) noexcept;
     bool            convertToPDF(const char*) noexcept;
