@@ -6,13 +6,256 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1080</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Widget</string>
+   <string>Slideshow Office API Test</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QPushButton" name="pushButton_killSOfficeBin">
+     <property name="text">
+      <string>killSOfficeBin</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="21">
+    <widget class="QPlainTextEdit" name="plainTextEdit_log"/>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_sOfficeBinPid">
+     <item>
+      <widget class="QLabel" name="label_sOfficeBinPid">
+       <property name="text">
+        <string>soffice.bin's PID is </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_sOfficeBinPid">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_sOfficeExePid">
+     <item>
+      <widget class="QLabel" name="label_sOfficeExePid">
+       <property name="text">
+        <string>soffice.exe's PID is </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_sOfficeExePid">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="pushButton_connect">
+     <property name="text">
+      <string>connect</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="pushButton_disconnect">
+     <property name="text">
+      <string>disconnect</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_connectionState">
+     <item>
+      <widget class="QLabel" name="label_connectionState">
+       <property name="text">
+        <string>Connection State: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_connectionState">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="0">
+    <widget class="QPushButton" name="pushButton_loadPresentation">
+     <property name="text">
+      <string>loadPresentation</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QPushButton" name="pushButton_closePresentation">
+     <property name="text">
+      <string>closePresentation</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_currentDocumentURL">
+     <item>
+      <widget class="QLabel" name="label_currentDocumentURL">
+       <property name="text">
+        <string>Current Document URL is</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_currentDocumentURL">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="9" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_isPresentationAvailable">
+     <item>
+      <widget class="QLabel" name="label_isPresentationAvailable">
+       <property name="text">
+        <string>Current Presentation State: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_isPresentationAvailable">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="10" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_settings">
+     <item>
+      <widget class="QCheckBox" name="checkBox_setFullScreen">
+       <property name="text">
+        <string>setFullScreen</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_setEndless">
+       <property name="text">
+        <string>setEndless</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="11" column="0">
+    <widget class="QPushButton" name="pushButton_start">
+     <property name="text">
+      <string>start</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QPushButton" name="pushButton_end">
+     <property name="text">
+      <string>end</string>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_slideShowState">
+     <item>
+      <widget class="QLabel" name="label_isSlideShowRunning">
+       <property name="text">
+        <string>Slide Show State: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_isSlideShowRunning">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_slideCount">
+       <property name="text">
+        <string>Slide Count: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_slideCount">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="14" column="0">
+    <widget class="QPushButton" name="pushButton_gotoNextEffect">
+     <property name="text">
+      <string>gotoNextEffect</string>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="0">
+    <widget class="QPushButton" name="pushButton_gotoPreviousEffect">
+     <property name="text">
+      <string>gotoPreviousEffect</string>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="0">
+    <widget class="QPushButton" name="pushButton_gotoNextSlide">
+     <property name="text">
+      <string>gotoNextSlide</string>
+     </property>
+    </widget>
+   </item>
+   <item row="17" column="0">
+    <widget class="QPushButton" name="pushButton_gotoPreviousSlide">
+     <property name="text">
+      <string>gotoPreviousSlide</string>
+     </property>
+    </widget>
+   </item>
+   <item row="18" column="0">
+    <widget class="QPushButton" name="pushButton_gotoFirstSlide">
+     <property name="text">
+      <string>gotoFirstSlide</string>
+     </property>
+    </widget>
+   </item>
+   <item row="19" column="0">
+    <widget class="QPushButton" name="pushButton_gotoLastSlide">
+     <property name="text">
+      <string>gotoLastSlide</string>
+     </property>
+    </widget>
+   </item>
+   <item row="20" column="0">
+    <widget class="QPushButton" name="pushButton_convertToPDF">
+     <property name="text">
+      <string>convertToPDF</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
