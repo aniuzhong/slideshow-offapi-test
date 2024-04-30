@@ -540,7 +540,7 @@ bool OfficeClient::setEndless(bool aValue) noexcept
             return false;
 
         css::uno::Reference<css::beans::XPropertySet> xPropertySet(xPresentation, css::uno::UNO_QUERY);
-        xPropertySet->setPropertyValue("IsFullScreen", css::uno::Any(aValue));
+        xPropertySet->setPropertyValue("IsEndless", css::uno::Any(aValue));
 
         return true;
     }
