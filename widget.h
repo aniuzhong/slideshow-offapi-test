@@ -30,7 +30,23 @@ private:
 
 private slots:
     void refreshUI();
- 
+    void on_pushButton_killSOfficeBin_clicked();
+    void on_pushButton_connect_clicked();
+    void on_pushButton_disconnect_clicked();
+    void on_pushButton_loadPresentation_clicked();
+    void on_pushButton_closePresentation_clicked();
+    void on_pushButton_start_clicked();
+    void on_pushButton_end_clicked();
+    void on_checkBox_setFullScreen_stateChanged(int arg1);
+    void on_checkBox_setEndless_stateChanged(int arg1);
+    void on_pushButton_gotoNextEffect_clicked();
+    void on_pushButton_gotoPreviousEffect_clicked();
+    void on_pushButton_gotoNextSlide_clicked();
+    void on_pushButton_gotoPreviousSlide_clicked();
+    void on_pushButton_gotoFirstSlide_clicked();
+    void on_pushButton_gotoLastSlide_clicked();
+    void on_pushButton_convertToPDF_clicked();
+
 private:
     Ui::Widget*     ui;
     QString         m_url;
