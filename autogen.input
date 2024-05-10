@@ -3,4 +3,5 @@
 --with-doxygen=no
 --enable-odk
 --enable-avmedia
+--disable-skia
 --enable-optimized=yes
